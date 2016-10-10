@@ -15,7 +15,7 @@ class SEO_Extension extends DataExtension {
      * @config array $db Our page fields
      **/
     private static $db = array(
-        'Title'           => 'Varchar(512)',
+//         'Title'           => 'Varchar(512)',
         'MetaTitle'       => 'Varchar(512)',
         'MetaDescription' => 'Varchar(512)',
         'Canonical'       => 'Varchar(512)',
@@ -24,7 +24,7 @@ class SEO_Extension extends DataExtension {
         'ChangeFrequency' => 'Varchar(100)',
         'SitemapHide'     => 'Boolean',
         'HideSocial'      => 'Boolean',
-        'OGtype'          => 'Varchar(100)',
+//         'OGtype'          => 'Varchar(100)',
         'OGlocale'        => 'Varchar(10)',
         'TwitterCard'     => 'Varchar(100)',
     );
