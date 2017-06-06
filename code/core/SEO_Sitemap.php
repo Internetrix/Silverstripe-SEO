@@ -59,9 +59,9 @@ class SEO_Sitemap
             $page->Host = $this->host;
             $data->push($page);
         }
-        return Controller::curr()->customise([
+        return Controller::curr()->customise(array(
             'Pages' => $data
-        ])->renderWith('SitemapXML');
+        ))->renderWith('SitemapXML');
     }
 
     /**
@@ -90,11 +90,11 @@ class SEO_Sitemap
      **/
     private function getSitemapFilters()
     {
-        $filters = [
+        $filters = array(
             'ClassName:not' => 'ErrorPage',
             'Robots:not'    => 'noindex,nofollow',
             'SitemapHide'   => 0
-        ];
+        );
         if(class_exists('SubSite')) {
             $filters['SubsiteID'] = Subsite::currentSubSiteID();
         }

@@ -17,11 +17,11 @@ class SEO_HeadTag extends DataObject
      *
      * @config array $db 
      **/
-    private static $db = [
+    private static $db = array(
         'Name'      => 'Varchar(512)',
         'Value'     => 'Varchar(512)',
         'Type'      => 'Varchar(512)'
-    ];
+    );
 
     /**
      * Show all fields in the Grid field
@@ -30,11 +30,11 @@ class SEO_HeadTag extends DataObject
      *
      * @config array $summary_fields
      **/
-    private static $summary_fields = [
+    private static $summary_fields = array(
         'Name'      => 'Name',
         'Value'     => 'Value',
         'Type'      => 'Type'
-    ];
+    );
 
     /**
      * Sort tags by name by default
@@ -76,13 +76,13 @@ class SEO_HeadTag extends DataObject
 
         $fields->removeByName('Main');
 
-        $fields->addFieldsToTab('Root.SEO', [
+        $fields->addFieldsToTab('Root.SEO', array(
             HeaderField::create('Meta Tag'),
             DropdownField::create('Type','Tag type',$this->tagTypes()),
             TextField::create('Name'),
             TextField::create('Value'),
             HiddenField::create('PageID')
-        ]);
+        ));
 
         return $fields;
     }
@@ -96,10 +96,10 @@ class SEO_HeadTag extends DataObject
      **/
     private function tagTypes()
     {
-        return [
+        return array(
             'name'     => '<meta name="name" content="value">',
             'link'     => '<link rel="name" href="value">',
             'property' => '<meta property="name" content="value">'
-        ];
+        );
     }
 }

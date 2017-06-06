@@ -17,7 +17,7 @@ class SEO_Extension extends DataExtension
      *
      * @config array $db 
      **/
-    private static $db = [
+    private static $db = array(
         'Title'           => 'Varchar(512)',
         'MetaTitle'       => 'Varchar(512)',
         'MetaDescription' => 'Varchar(512)',
@@ -30,7 +30,7 @@ class SEO_Extension extends DataExtension
         'OGtype'          => 'Varchar(100)',
         'OGlocale'        => 'Varchar(10)',
         'TwitterCard'     => 'Varchar(100)'
-    ];
+    );
 
     /**
      * Social image and other has_one relations
@@ -39,9 +39,9 @@ class SEO_Extension extends DataExtension
      *
      * @config array $has_one 
      **/
-    private static $has_one = [
+    private static $has_one = array(
         'SocialImage'     => 'Image'
-    ];
+    );
 
     /**
      * Has many extra Meta tags
@@ -50,10 +50,10 @@ class SEO_Extension extends DataExtension
      *
      * @config array $many_many 
      **/
-    private static $many_many = [
+    private static $many_many = array(
         'HeadTags'        => 'SEO_HeadTag',
         'SitemapImages'   => 'File'
-    ];
+    );
 
     /**
      * Sitemap defaults
@@ -62,11 +62,11 @@ class SEO_Extension extends DataExtension
      *
      * @config array $defaults 
      **/
-    private static $defaults = [
+    private static $defaults = array(
         'Robots'          => 'index,follow',
         'Priority'        => 0.50,
         'ChangeFrequency' => 'weekly'
-    ];
+    );
     
     /**
      * Adds our SEO Meta fields to the page field list
@@ -134,7 +134,7 @@ class SEO_Extension extends DataExtension
             $fields = SEO_FieldValues::SummaryFields();
 
             if($class instanceof Page) {
-                $fields = array_merge(['SEOPageStatus' => 'Status'], $fields);
+                $fields = array_merge(array('SEOPageStatus' => 'Status'), $fields);
             }
             Config::inst()->update($this->owner->class, 'summary_fields', $fields);
 

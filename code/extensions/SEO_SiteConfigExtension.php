@@ -17,11 +17,11 @@ class SEO_SiteConfigExtension extends DataExtension
      *
      * @config array $has_one 
      **/
-	private static $db = [
+	private static $db = array(
         'TwitterHandle' => 'Varchar(512)',
         'FacebookAppID' => 'Varchar(512)',
         'OGSiteName'    => 'Varchar(512)'
-    ];
+    );
     
     /**
      * Adds our fields to the site config field list

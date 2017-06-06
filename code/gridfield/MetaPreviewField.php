@@ -17,11 +17,11 @@ class MetaPreviewField extends LiteralField
 
 	private function getSerpContent()
 	{
-		return Controller::curr()->customise([
+		return Controller::curr()->customise(array(
 			'DefaultTitle' => $this->getSerpTitle(),
             'DefaultPath'  => $this->getSERPLink(),
             'DefaultDescription' => $this->getSerpDescription()
-		])->renderWith('MetaPreview');
+		))->renderWith('MetaPreview');
 	}
 
     private function getSerpTitle()

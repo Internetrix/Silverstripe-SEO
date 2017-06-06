@@ -17,7 +17,7 @@ class SEO_PublishPageRequest extends GridFieldDetailForm_ItemRequest
      *
      * @config array $allowed_actions 
      **/
-    private static $allowed_actions = ['ItemEditForm'];
+    private static $allowed_actions = array('ItemEditForm');
     
     /**
      * Chechs the current object in SEO Admin and creats publish and draft buttons if

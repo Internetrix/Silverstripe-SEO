@@ -127,14 +127,14 @@ final class SEO
     {
         self::getCurrentPage();
 
-        $tags = new ArrayData([
+        $tags = new ArrayData(array(
             'MetaTitle'       => self::getTitle(),
             'MetaDescription' => self::getDescription(),
             'PageURL'         => self::getPageURL(),
             'PageSEO'         => self::getPage(),
             'Pagination'      => self::getPaginationHTML(),
             'OtherTags'       => self::getOtherHTML()
-        ]);
+        ));
         return $tags->renderWith('HeadTags');
     }
 

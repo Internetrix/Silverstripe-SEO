@@ -17,7 +17,7 @@ class SitemapXML_Controller extends Page_Controller
      *
      * @config array $allowed_actions 
      **/
-    private static $allowed_actions = ['getSitemap'];
+    private static $allowed_actions = array('getSitemap');
 
     /**
      * Push requests to sitemap.xml to the getSitemap method
@@ -26,9 +26,9 @@ class SitemapXML_Controller extends Page_Controller
      *
      * @config array $url_handlers 
      **/
-    private static $url_handlers = [
+    private static $url_handlers = array(
         '' => 'getSitemap'
-    ];
+    );
 
     /**
      * Set properties for this class and call the sitemap render method
