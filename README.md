@@ -7,32 +7,41 @@
 
 Author: [Andrew Mc Cormack](https://github.com/Andrew-Mc-Cormack)
 
-A Silverstripe module to enhance and optimize your website SEO. This module also adds all the SEO functionality necessary for a search engine to crawl and index your website pages / content effectively. The Silverstripe SEO module works with both pages and Data Objects and allows both to have custom Meta, sitemap settings, social sharing content, among other features. Other key features include custom Meta tags and the ability to add images to your sitemap through the SEO panel gridfield.
+A Silverstripe module to enhance and optimize your website SEO. 
 
-## Guides
-  
+This module also adds all the SEO functionality necessary for a search engine to crawl and index your website pages / content effectively. The Silverstripe SEO module works with both pages and Data Objects and allows both to have custom Meta, sitemap settings, social sharing content, among other features. Other key features include custom Meta tags and the ability to add images to your sitemap through the SEO panel gridfield.
+
   - [Installation](/docs/installation)
     - [Composer](/docs/installation#composer)
     - [Extension](/docs/installation#extension)
     - [Controller](/docs/installation#controller)
-  - [Meta](/docs/meta)
-    - [Setting Meta](/docs/meta#setting-meta)
-    - [Setting dynamic Meta](/docs/meta#setting-dynamic-meta)
-    - [Setting Meta from objects](/docs/meta#setting-meta-from-objects)
-    - [Setting the Meta tags URL](/docs/meta#setting-the-meta-tags-url)
-  - [Pagination](/docs/pagination)
-    - [Setting Rel pagination Meta tags](/docs/pagination#setting-rel-pagination-meta-tags)
-    - [Whitelisting URL parameters](/docs/pagination#whitelisting-url-parameters)
-  - [SEO Admin](/docs/seo-admin)
-    - [Customising the SEO Admin models](/docs/seo-admin#customising-the-seo-admin-models)
-  - [Sitemap](/docs/sitemap)
-    - [Subsite Support](/docs/sitemap#subsite-support)
-    - [XML sitemap](/docs/sitemap#xml-sitemap)
-    - [HTML sitemap](/docs/sitemap#html-sitemap)
-    - [Adding sitemap pages](/docs/sitemap#adding-sitemap-pages)
-    - [Adding sitemap images](/docs/sitemap#adding-sitemap-images)
-  - [Robots File](/docs/robots)
-    - [Configuration](/docs/robots#configuration)
+  - [SEO Extension]()
+    - [Meta Tab]()
+    - [Default Meta config]()
+    - [Google Meta Preview]()
+    - [Indexing config]()
+    - [Social sharing config]()
+    - [Sitemap Tab]()
+    - [Sitemap model config]()
+    - [Adding sitemap images]()
+  - [Robots.txt]()
+    - [Subsite and theme support]()
+    - [Creating a robots text file]()
+  - [Meta]()
+    - [Setting dynamic Meta tags]()
+    - [Setting pagination Meta tags]()
+  - [Sitemap]()
+    - [XML Sitemap]()
+    - [HTML Sitemap]()
+    - [Sitemap config]()
+    - [Adding Sitemap images]()
+  - [Blog Module]()
+    - [Blog Post defaults]()
+  - [Site Config]()
+    - [Sitewide Meta defaults]()
+    - [Sitemap priority]()
+  - [SEO Admin]()
+    - [Customising the SEO Admin models]()
 
 ## License
 

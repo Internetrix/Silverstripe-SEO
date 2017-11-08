@@ -44,7 +44,7 @@ class SEO_ModelAdmin extends ModelAdmin
      *
      * @config string $menu_icon 
      **/
-    private static $menu_icon = 'seo/images/menu-icons/16x16/seo.png';
+    private static $menu_icon = 'seo/assets/img/menu-icons/16x16/seo.png';
 
     /**
      * Menu priority
@@ -71,7 +71,7 @@ class SEO_ModelAdmin extends ModelAdmin
      *
      * @config array $managed_models 
      **/
-    private static $managed_models = [];
+    private static $managed_models = ['Page'];
 
     /**
      * Disable model imports in SEO admin
@@ -81,41 +81,6 @@ class SEO_ModelAdmin extends ModelAdmin
      * @config string $model_importers 
      **/
     private static $model_importers = null;
-
-    /**
-     * Update the managed models array with objects listed in the YML config files
-     *
-     * @since version 1.0.0
-     *
-     * @return void
-     **/
-    public function init()
-    {
-        $models = Config::inst()->get($this->class, 'models');
-
-        Config::inst()->update($this->class, 'managed_models', $models);
-
-        parent::init();
-    }
-
-    /**
-     * Key SEO fields are contained within the CSV export
-     *
-     * @since version 1.0.0
-     *
-     * @return array
-     **/
-    public function getExportFields()
-    {
-        return [
-            'ID'              => 'ID',
-            'Created'         => 'Created',
-            'Title'           => 'Title',
-            'Robots'          => 'Robots',
-            'Priority'        => 'Priority',
-            'ChangeFrequency' => 'ChangeFrequency'
-        ];
-    }
 
     /**
      * The SEO admin area is for managing page SEO, not for page creation. Some grid
@@ -134,13 +99,20 @@ class SEO_ModelAdmin extends ModelAdmin
 
         $class = new $this->modelClass;
         if($class instanceof Page) {
-            $form = $this->setRequestHandler($form);
+            $form
+                ->Fields()
+                ->fieldByName($this->sanitiseClassName($this->modelClass))
+                ->getConfig()
+                ->getComponentByType('GridFieldDetailForm')
+                ->setItemRequestClass('SEO_PublishPageRequest');
         }
         $grid = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
         $grid->getConfig()->removeComponentsByType('GridFieldAddNewButton');
+        $grid->getConfig()->removeComponentsByType('GridFieldDeleteAction');
+        $grid->getConfig()->removeComponentsByType('GridFieldEditButton');
 
         $list = $this
-            ->getObjectList()
+            ->getList()
             ->filter($this->getFilters())
             ->sort('Priority', 'DESC');
 
@@ -152,34 +124,13 @@ class SEO_ModelAdmin extends ModelAdmin
     }
 
     /**
-     * Set the form request handler
-     *
-     * @since version 1.0.0
-     *
-     * @param object $form
-     *
-     * @return object
-     **/
-    private function setRequestHandler($form)
-    {
-        $form
-            ->Fields()
-            ->fieldByName($this->sanitiseClassName($this->modelClass))
-            ->getConfig()
-            ->getComponentByType('GridFieldDetailForm')
-            ->setItemRequestClass('SEO_PublishPageRequest');
-
-        return $form;
-    }
-
-    /**
      * Get list of CMS grid pages
      *
      * @since version 1.0.0
      *
      * @return object
      **/
-    public function getObjectList()
+    public function getList()
     {
         $class = new $this->modelClass;
 
@@ -250,23 +201,85 @@ class SEO_ModelAdmin extends ModelAdmin
     {
         if(!Controller::curr() instanceof SEO_ModelAdmin) return parent::getSearchContext();
 
-        Config::inst()->update($this->modelClass, 'searchable_fields', SEO_FieldValues::SearchableFields());
+        Config::inst()->update($this->modelClass, 'searchable_fields', $this->getSearchableFields());
 
         $context = parent::getSearchContext();
+        $model = $this->modelClass;
+        $model = $model::create();
 
         $context->getFields()->fieldByName('q[Robots]')
             ->setEmptyString('- select -')
-            ->setSource(SEO_FieldValues::IndexRules());
+            ->setSource($model->getRobotsIndexingRules());
 
         $context->getFields()->fieldByName('q[ChangeFrequency]')
             ->setEmptyString('- select -')
-            ->setSource(SEO_FieldValues::SitemapChangeFrequency());
+            ->setSource($model->getSitemapChangeFrequency());
 
         $context->getFields()->fieldByName('q[HideSocial]')
             ->setTitle('Social Meta hidden:')
             ->setEmptyString('- select -')
-            ->setSource(SEO_FieldValues::YesNo());
+            ->setSource([
+                '1' => 'Yes',
+                '0' => 'No'
+            ]);
                 
         return $context;
+    }
+
+    /**
+     * CSV export fields
+     *
+     * @since version 1.0.0
+     *
+     * @return array
+     **/
+    public function getExportFields()
+    {
+        return [
+            'ID'              => 'ID',
+            'Created'         => 'Created',
+            'Title'           => 'Title',
+            'Robots'          => 'Robots',
+            'Priority'        => 'Priority',
+            'ChangeFrequency' => 'ChangeFrequency'
+        ];
+    }
+
+    /**
+     * Returns an array of searchable fields used in the SEO Admin section of the CMS
+     *
+     * @since version 1.0.2
+     *
+     * @return array Returns an array of SEO Admin searchable fields
+     **/
+    private function getSearchableFields()
+    {
+        return [
+            'Title' => [
+                'title'  => 'Title:',
+                'field'  => 'TextField',
+                'filter' => 'PartialMatchFilter'
+            ],
+            'URLSegment' => [
+                'title'  => 'URL segment:',
+                'field'  => 'TextField',
+                'filter' => 'PartialMatchFilter'
+            ],
+            'Robots' => [
+                'title'  => 'Robots:',
+                'field'  => 'DropdownField',
+                'filter' => 'ExactMatchFilter'
+            ],
+            'ChangeFrequency' => [
+                'title'  => 'Change frequency:',
+                'field'  => 'DropdownField',
+                'filter' => 'ExactMatchFilter'
+            ],
+            'HideSocial' => [
+                'title'  => 'Social Meta:',
+                'field'  => 'DropdownField',
+                'filter' => 'ExactMatchFilter'
+            ]
+        ];
     }
 }

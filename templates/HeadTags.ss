@@ -1,49 +1,74 @@
-<% with $PageSEO %>
+<% with SEOPage %>
 
-<title>$Up.MetaTitle</title>
-<meta name="description" content="$Up.MetaDescription">
+	<title>$PageMetaTitle</title>
+	<meta name="description" content="$PageMetaDescription">
 
-<link rel="canonical" href="<% if $Canonical %>$AbsoluteBaseURL{$Canonical}/<% else %>$Up.PageURL<% end_if %>">
-<meta name="robots" content="<% if $Robots %>$Robots<% else %>noindex,nofollow<% end_if %>">
+	<link rel="canonical" href="$PageCanonical">
+	<meta name="robots" content="$PageRobots">
 
-<% if not $HideSocial %>
+	<% if not $HideSocial %>
 
-<meta property="og:title" content="$Up.MetaTitle">
-<meta property="og:description" content="$Up.MetaDescription">
-<meta property="og:type" content="<% if $OGtype %>$OGtype<% else %>website<% end_if %>">
-<meta property="og:url" content="$Up.PageURL">
-<meta property="og:locale" content="<% if $OGlocale %>$OGlocale<% else %>$DefaultContentLocale<% end_if %>">
+	<meta property="og:title" content="$PageMetaTitle">
+	<meta property="og:description" content="$PageMetaDescription">
+	<meta property="og:type" content="$PageOgType">
+	<meta property="og:url" content="$PageURL">
+	<meta property="og:locale" content="$PageOgLocale">
 
-<meta name="twitter:title" content="$Up.MetaTitle">
-<meta name="twitter:description" content="$Up.MetaDescription">
-<meta name="twitter:card" content="<% if $TwitterCard %>$TwitterCard<% else %>summary<% end_if %>">
+	<meta name="twitter:title" content="$PageMetaTitle">
+	<meta name="twitter:description" content="$PageMetaDescription">
+	<meta name="twitter:card" content="$PageTwitterCard">
 
-<% if $SocialImage %>
-<% with $SocialImage %>
-<meta property="og:image" content="$AbsoluteURL">
-<meta name="twitter:image" content="$AbsoluteURL">
+	<% if $PageSocialImage %>
+	<meta property="og:image" content="$PageSocialImage.AbsoluteURL">
+	<meta name="twitter:image" content="$PageSocialImage.AbsoluteURL">
+	<% end_if %>
+
+	<% if $SiteFacebookAppID %>
+	<meta property="fb:app_id" content="$SiteFacebookAppID">
+	<% end_if %>
+
+	<% if $SiteOgSiteName %>
+	<meta property="og:site_name" content="$SiteOgSiteName">
+	<% end_if %>
+
+	<% if $SiteTwitterHandle %>
+	<meta name="twitter:site" content="$SiteTwitterHandle">
+	<% end_if %>
+
+	<% if $SiteCreatorTwitterHandle %>
+	<meta name="twitter:creator" content="$SiteCreatorTwitterHandle">
+	<% end_if %>
+
+	<% end_if %>
+
+	<% loop HeadTags.Filter('Type', 'name') %>
+	<meta name="$Name" content="$Value">
+	<% end_loop %>
+
+	<% loop HeadTags.Filter('Type', 'link') %>
+	<link rel="$Name" href="$value">
+	<% end_loop %>
+
+	<% loop HeadTags.Filter('Type', 'property') %>
+	<meta property="$Name" content="$Value">
+	<% end_loop %>
+
+	<% if PageGenerator %>
+	<meta name="generator" content="$PageGenerator">
+	<% end_if %>
+
+	<meta http-equiv="Content-type" content="text/html; charset=$PageCharset">
+
+	<% if isCMSPreviewPage %>
+	<meta name="x-page-id" content="$CMSPageID">
+	<meta name="x-cms-edit-link" content="$CMSPageEditLink">
+	<% end_if %>
+
+	<% if PaginationPrevTag %>
+	<link rel="prev" href="$PaginationPrevTag">
+	<% end_if %>
+	<% if PaginationNextTag %>
+	<link rel="next" href="$PaginationNextTag">
+	<% end_if %>
+
 <% end_with %>
-<% end_if %>
-
-<% if $SiteConfig.FacebookAppID %>
-<meta property="fb:app_id" content="$SiteConfig.FacebookAppID">
-<% end_if %>
-
-<% if $SiteConfig.OGSiteName %>
-<meta property="og:site_name" content="$SiteConfig.OGSiteName">
-<% else %>
-<meta property="og:site_name" content="$SiteConfig.Title">
-<% end_if %>
-
-<% if $SiteConfig.TwitterHandle %>
-<meta name="twitter:site" content="@$SiteConfig.TwitterHandle">
-<meta name="twitter:creator" content="@$SiteConfig.TwitterHandle">
-<% end_if %>
-
-<% end_if %>
-
-<% end_with %>
-
-$Pagination
-
-$OtherTags
