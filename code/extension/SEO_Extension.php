@@ -46,9 +46,6 @@ class SEO_Extension extends DataExtension
         'MetaDescription' => 'Varchar(512)',
         'Canonical'       => 'Varchar(512)',
         'Robots'          => 'Varchar(100)',
-        'Priority'        => 'Decimal(3,2)',
-        'ChangeFrequency' => 'Varchar(20)',
-        'SitemapHide'     => 'Boolean',
         'HideSocial'      => 'Boolean',
         'OGtype'          => 'Varchar(100)',
         'OGlocale'        => 'Varchar(10)',
@@ -192,20 +189,6 @@ class SEO_Extension extends DataExtension
         $fields->addFieldToTab('Root.MetaTags', $grid);
 
         // SITEMAP TAB
-        // Sitemap
-        $fields->addFieldToTab('Root.Sitemap', HeaderField::create(false, 'Sitemap', 2));
-        $fields->addFieldToTab('Root.Sitemap', CheckboxField::create('SitemapHide', 'Hide in sitemap? (XML and HTML)'));
-        $fields->addFieldToTab('Root.Sitemap', NumericField::create('Priority'));
-        $fields->addFieldToTab('Root.Sitemap', DropdownField::create('ChangeFrequency', 'Change Frequency')
-            ->setSource($this->getSitemapChangeFrequency())
-            ->setEmptyString('- please select - '));
-        $grid = GridField::create('SitemapImages', 'Sitemap Images', $this->owner->SitemapImages(), GridFieldConfig_RelationEditor::create());
-        $grid->getConfig()
-            ->removeComponentsByType('GridFieldAddNewButton')
-            ->removeComponentsByType('GridFieldAddExistingAutocompleter')
-            ->addComponent(new SEO_SitemapImageAutocompleter('before'));
-        $fields->addFieldToTab('Root.Sitemap', HeaderField::create(false, 'Sitemap', 2));
-        $fields->addFieldToTab('Root.Sitemap', $grid);
 
         return $fields;
     }
