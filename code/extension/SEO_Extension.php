@@ -491,7 +491,7 @@ class SEO_Extension extends DataExtension
      **/
     public function getPageSocialImage()
     {
-        if($this->owner->SocialImage()) {
+        if($this->owner->SocialImage()->exists()) {
             return $this->owner->SocialImage();
         }
         if(class_exists('BlogPost')) {
