@@ -502,7 +502,6 @@ class SEO_Extension extends DataExtension
             }
         }
     }
-
     /**
      * Get the current site Facebook app ID
      *

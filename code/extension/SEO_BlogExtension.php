@@ -35,10 +35,6 @@ class SEO_BlogExtension extends DataExtension
     public function updateCMSFields(FieldList $fields) 
     {
         $fields->addFieldToTab('Root.PostSEO', HeaderField::create(false, 'Blog Post SEO', 2));
-        $fields->addFieldToTab('Root.PostSEO', CheckboxField::create('DefaultPostMetaTitle', 'Default Meta title')
-        	->setDescription('Use page Title when no Meta title set for Blog Post'));
-        $fields->addFieldToTab('Root.PostSEO', CheckboxField::create('DefaultPostMetaDescription', 'Default Meta description')
-        	->setDescription('Use page summary when no Meta descripion set for Blog Post'));
         $fields->addFieldToTab('Root.PostSEO', CheckboxField::create('UseFeaturedAsSocialImage', 'Use featured image as social image')
             ->setDescription('Use page featured image as social image'));
 
