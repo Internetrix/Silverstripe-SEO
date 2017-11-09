@@ -4,7 +4,7 @@
 	<meta name="description" content="$PageMetaDescription">
 
 	<link rel="canonical" href="$PageCanonical">
-	<meta name="robots" content="$PageRobots">
+	<%--<meta name="robots" content="$PageRobots">--%>
 
 	<% if not $HideSocial %>
 
