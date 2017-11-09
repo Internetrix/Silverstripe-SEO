@@ -383,8 +383,8 @@ class SEO_Extension extends DataExtension
      **/
     public function getPageMetaDescription()
     {
-        if($this->owner->MetaDescripion) {
-            return $this->owner->MetaDescripion;
+        if($this->owner->MetaDescription) {
+            return $this->owner->MetaDescription;
         }
         if(class_exists('BlogPost')) {
             if($this->owner instanceof BlogPost) {
