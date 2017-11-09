@@ -21,8 +21,7 @@ class SEO_SiteConfigExtension extends DataExtension
         'OGSiteName'           => 'Varchar(512)',
         'TwitterHandle'        => 'Varchar(512)',
         'CreatorTwitterHandle' => 'Varchar(512)',
-        'FacebookAppID'        => 'Varchar(512)',
-        'UseTitleAsMetaTitle'  => 'Boolean'
+        'FacebookAppID'        => 'Varchar(512)'
     ];
     
     /**
@@ -44,9 +43,6 @@ class SEO_SiteConfigExtension extends DataExtension
         $fields->addFieldToTab('Root.SEO', TextField::create('TwitterHandle', 'Twitter handle (no @)'));
         $fields->addFieldToTab('Root.SEO', TextField::create('CreatorTwitterHandle', 'Twitter creator handle (no @)'));
         $fields->addFieldToTab('Root.SEO', TextField::create('FacebookAppID', 'Facebook APP ID'));
-
-        $fields->addFieldToTab('Root.SEO', HeaderField::create('Meta'));
-        $fields->addFieldToTab('Root.SEO', CheckboxField::create('UseTitleAsMetaTitle', 'Default Meta title to page Title'));
 		
 		return $fields;
 	}
