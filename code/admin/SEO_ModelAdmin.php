@@ -109,7 +109,7 @@ class SEO_ModelAdmin extends ModelAdmin
         $grid = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
         $grid->getConfig()->removeComponentsByType('GridFieldAddNewButton');
         $grid->getConfig()->removeComponentsByType('GridFieldDeleteAction');
-        $grid->getConfig()->removeComponentsByType('GridFieldEditButton');
+//        $grid->getConfig()->removeComponentsByType('GridFieldEditButton');
 
         $list = $this
             ->getList()
@@ -156,9 +156,9 @@ class SEO_ModelAdmin extends ModelAdmin
         if(isset($request['Robots']) && $request['Robots']){
             $filters['Robots'] = $request['Robots'];
         }
-        if(isset($request['ChangeFrequency']) && $request['ChangeFrequency']){
-            $filters['ChangeFrequency'] = $request['ChangeFrequency'];
-        }
+//        if(isset($request['ChangeFrequency']) && $request['ChangeFrequency']){
+//            $filters['ChangeFrequency'] = $request['ChangeFrequency'];
+//        }
         if(isset($request['HideSocial']) && $request['HideSocial']){
             $filters['HideSocial'] = $request['HideSocial'];
         }
@@ -211,9 +211,9 @@ class SEO_ModelAdmin extends ModelAdmin
             ->setEmptyString('- select -')
             ->setSource($model->getRobotsIndexingRules());
 
-        $context->getFields()->fieldByName('q[ChangeFrequency]')
-            ->setEmptyString('- select -')
-            ->setSource($model->getSitemapChangeFrequency());
+//        $context->getFields()->fieldByName('q[ChangeFrequency]')
+//            ->setEmptyString('- select -')
+//            ->setSource($model->getSitemapChangeFrequency());
 
         $context->getFields()->fieldByName('q[HideSocial]')
             ->setTitle('Social Meta hidden:')
@@ -240,8 +240,8 @@ class SEO_ModelAdmin extends ModelAdmin
             'Created'         => 'Created',
             'Title'           => 'Title',
             'Robots'          => 'Robots',
-            'Priority'        => 'Priority',
-            'ChangeFrequency' => 'ChangeFrequency'
+            'Priority'        => 'Priority'
+//            'ChangeFrequency' => 'ChangeFrequency'
         ];
     }
 
@@ -270,11 +270,11 @@ class SEO_ModelAdmin extends ModelAdmin
                 'field'  => 'DropdownField',
                 'filter' => 'ExactMatchFilter'
             ],
-            'ChangeFrequency' => [
-                'title'  => 'Change frequency:',
-                'field'  => 'DropdownField',
-                'filter' => 'ExactMatchFilter'
-            ],
+//            'ChangeFrequency' => [
+//                'title'  => 'Change frequency:',
+//                'field'  => 'DropdownField',
+//                'filter' => 'ExactMatchFilter'
+//            ],
             'HideSocial' => [
                 'title'  => 'Social Meta:',
                 'field'  => 'DropdownField',
