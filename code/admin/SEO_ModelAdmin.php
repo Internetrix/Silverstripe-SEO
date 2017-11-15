@@ -117,6 +117,7 @@ class SEO_ModelAdmin extends ModelAdmin
             ->sort('Priority', 'DESC');
 
         $grid->setList($list);
+        $grid->setModelClass($class->ClassName);
 
         $this->extend('updateEditForm',  $grid);
         
@@ -153,9 +154,12 @@ class SEO_ModelAdmin extends ModelAdmin
 
         $filters = [];
 
-        if(isset($request['Robots']) && $request['Robots']){
-            $filters['Robots'] = $request['Robots'];
+        if(isset($request['Title']) && $request['Title']){
+            $filters['Title'] = $request['Title'];
         }
+//        if(isset($request['Robots']) && $request['Robots']){
+//            $filters['Robots'] = $request['Robots'];
+//        }
 //        if(isset($request['ChangeFrequency']) && $request['ChangeFrequency']){
 //            $filters['ChangeFrequency'] = $request['ChangeFrequency'];
 //        }
@@ -165,6 +169,7 @@ class SEO_ModelAdmin extends ModelAdmin
         if($this->modelClass !== "Page"){
             $filters['ClassName'] = $this->modelClass;
         }
+
         return $filters;
     }
 
@@ -207,9 +212,9 @@ class SEO_ModelAdmin extends ModelAdmin
         $model = $this->modelClass;
         $model = $model::create();
 
-        $context->getFields()->fieldByName('q[Robots]')
-            ->setEmptyString('- select -')
-            ->setSource($model->getRobotsIndexingRules());
+//        $context->getFields()->fieldByName('q[Robots]')
+//            ->setEmptyString('- select -')
+//            ->setSource($model->getRobotsIndexingRules());
 
 //        $context->getFields()->fieldByName('q[ChangeFrequency]')
 //            ->setEmptyString('- select -')
@@ -239,7 +244,7 @@ class SEO_ModelAdmin extends ModelAdmin
             'ID'              => 'ID',
             'Created'         => 'Created',
             'Title'           => 'Title',
-            'Robots'          => 'Robots',
+//            'Robots'          => 'Robots',
             'Priority'        => 'Priority'
 //            'ChangeFrequency' => 'ChangeFrequency'
         ];
@@ -265,11 +270,11 @@ class SEO_ModelAdmin extends ModelAdmin
                 'field'  => 'TextField',
                 'filter' => 'PartialMatchFilter'
             ],
-            'Robots' => [
-                'title'  => 'Robots:',
-                'field'  => 'DropdownField',
-                'filter' => 'ExactMatchFilter'
-            ],
+//            'Robots' => [
+//                'title'  => 'Robots:',
+//                'field'  => 'DropdownField',
+//                'filter' => 'ExactMatchFilter'
+//            ],
 //            'ChangeFrequency' => [
 //                'title'  => 'Change frequency:',
 //                'field'  => 'DropdownField',

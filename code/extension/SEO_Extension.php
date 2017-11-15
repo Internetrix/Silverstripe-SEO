@@ -225,7 +225,6 @@ class SEO_Extension extends DataExtension
             'ID'              => 'ID',
             'PublishedIcon'   => 'Published',
             'Title'           => 'Title',
-            'PageRobots'      => 'Robots',
             'PageOgType'      => 'OGtype',
             'PageOgLocale'    => 'OGlocale',
             'PageTwitterCard' => 'TwitterCard',
