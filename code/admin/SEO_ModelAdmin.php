@@ -164,7 +164,7 @@ class SEO_ModelAdmin extends ModelAdmin
 
             if ($query == 'MetaTitle') {
                 $toReturnList = $toReturnList->filterByCallback(function ($item, $list) {
-                    return strlen($item->MetaTitle) > 35;
+                    return strlen($item->MetaTitle) > 125;
                 });
             }else if ($query == 'MetaDescription'){
                 $toReturnList = $toReturnList->filterByCallback(function ($item, $list) {
