@@ -134,11 +134,46 @@ class SEO_ModelAdmin extends ModelAdmin
     public function getList()
     {
         $class = new $this->modelClass;
+        $toReturnList = null;
+        $request = $this->getRequest()->requestVar('q');
 
         if($class instanceof Page) {
-            return $this->getVersionedPages();
+            $toReturnList = $this->getVersionedPages();
+        }else{
+            $toReturnList = parent::getList();
         }
-        return parent::getList();
+
+        //filter isEmpty
+        if(isset($request['isEmpty']) && $request['isEmpty']){
+            $query = $request['isEmpty'];
+            //doing it via filterByCallback because filter() doesnt support IS NULL in SS 3.1
+            if ($query == 'MetaTitle') {
+                $toReturnList = $toReturnList->filterByCallback(function ($item, $list) {
+                    return $item->MetaTitle == null;
+                });
+            }else if ($query == 'MetaDescription'){
+                $toReturnList = $toReturnList->filterByCallback(function ($item, $list) {
+                    return $item->MetaDescription == null;
+                });
+            }
+        }
+
+        //filter length exceeded
+        if(isset($request['lengthExceed']) && $request['lengthExceed']){
+            $query = $request['lengthExceed'];
+
+            if ($query == 'MetaTitle') {
+                $toReturnList = $toReturnList->filterByCallback(function ($item, $list) {
+                    return strlen($item->MetaTitle) > 35;
+                });
+            }else if ($query == 'MetaDescription'){
+                $toReturnList = $toReturnList->filterByCallback(function ($item, $list) {
+                    return strlen($item->MetaDescription) > 160;
+                });
+            }
+        }
+
+        return $toReturnList;
     }
 
     /**
@@ -157,12 +192,7 @@ class SEO_ModelAdmin extends ModelAdmin
         if(isset($request['Title']) && $request['Title']){
             $filters['Title'] = $request['Title'];
         }
-//        if(isset($request['Robots']) && $request['Robots']){
-//            $filters['Robots'] = $request['Robots'];
-//        }
-//        if(isset($request['ChangeFrequency']) && $request['ChangeFrequency']){
-//            $filters['ChangeFrequency'] = $request['ChangeFrequency'];
-//        }
+
         if(isset($request['HideSocial']) && $request['HideSocial']){
             $filters['HideSocial'] = $request['HideSocial'];
         }
@@ -212,14 +242,6 @@ class SEO_ModelAdmin extends ModelAdmin
         $model = $this->modelClass;
         $model = $model::create();
 
-//        $context->getFields()->fieldByName('q[Robots]')
-//            ->setEmptyString('- select -')
-//            ->setSource($model->getRobotsIndexingRules());
-
-//        $context->getFields()->fieldByName('q[ChangeFrequency]')
-//            ->setEmptyString('- select -')
-//            ->setSource($model->getSitemapChangeFrequency());
-
         $context->getFields()->fieldByName('q[HideSocial]')
             ->setTitle('Social Meta hidden:')
             ->setEmptyString('- select -')
@@ -227,7 +249,24 @@ class SEO_ModelAdmin extends ModelAdmin
                 '1' => 'Yes',
                 '0' => 'No'
             ]);
-                
+
+        $isEmptyDropdown = DropdownField::create('q[isEmpty]');
+        $isEmptyDropdown->setTitle('Has empty:')
+                        ->setEmptyString('- select -')
+                        ->setSource([
+                            'MetaTitle' => 'MetaTitle',
+                            'MetaDescription' => 'MetaDescription'
+                        ]);
+        $context->getFields()->push($isEmptyDropdown);
+
+        $lengthDropdown = DropdownField::create('q[lengthExceed]');
+        $lengthDropdown->setTitle('Length Exceeded:')
+                        ->setEmptyString('- select -')
+                        ->setSource([
+                            'MetaTitle' => 'MetaTitle',
+                            'MetaDescription' => 'MetaDescription'
+                        ]);
+        $context->getFields()->push($lengthDropdown);
         return $context;
     }
 
@@ -244,9 +283,7 @@ class SEO_ModelAdmin extends ModelAdmin
             'ID'              => 'ID',
             'Created'         => 'Created',
             'Title'           => 'Title',
-//            'Robots'          => 'Robots',
             'Priority'        => 'Priority'
-//            'ChangeFrequency' => 'ChangeFrequency'
         ];
     }
 
@@ -270,16 +307,6 @@ class SEO_ModelAdmin extends ModelAdmin
                 'field'  => 'TextField',
                 'filter' => 'PartialMatchFilter'
             ],
-//            'Robots' => [
-//                'title'  => 'Robots:',
-//                'field'  => 'DropdownField',
-//                'filter' => 'ExactMatchFilter'
-//            ],
-//            'ChangeFrequency' => [
-//                'title'  => 'Change frequency:',
-//                'field'  => 'DropdownField',
-//                'filter' => 'ExactMatchFilter'
-//            ],
             'HideSocial' => [
                 'title'  => 'Social Meta:',
                 'field'  => 'DropdownField',
